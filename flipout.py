@@ -20,6 +20,11 @@ with open(inputfile) as f:
             data[key].append(line[line.find(':')+2:].split()[2])
 
 with open(outputfile,'w') as f:
+    
+    for row in data.keys():
+         # sep = ' ' * (int(len(row)/4.5))
+        f.write(row.replace(' ','_') + '\t')
+    f.write('\n')
     for row in zip(*data.values()):
         f.write('\t'.join(row) + '\n')
     print("{} was created".format(outputfile))    
