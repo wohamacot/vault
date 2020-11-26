@@ -12,15 +12,12 @@ outputfile = argv[2]
 
 with open(inputfile) as f:
     data = defaultdict(list)
-    titles = list()
     for line in f:
         key = line[:line.find(':')].strip()
-        titles.append(key)
         if line.startswith(" MD step:"):
             data[key].append(line.split()[2])
         else:
-            data[key].append(line[line.find(':')+1:].split()[0])
-            
+            data[key].append(line[line.find(':')+2:].split()[2])
 
 with open(outputfile,'w') as f:
     for row in zip(*data.values()):
