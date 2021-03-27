@@ -131,3 +131,4 @@ dmypy.json
 .gitignore
 *.out
 *.txt
+*.xlsx
