@@ -24,21 +24,29 @@ def create_workbook():
 
 def start():    
     start_time = datetime.now().strftime("%H:%M:%S")
-    new_data = [[args.name, start_time]]
         
     try:
         
         wb_load = load_workbook(workbook_name)
-        source = wb_load[current_mounth]
-        values = {} # dict key - values from name; vals - values from start_time 
-        for i in range(1,len(source['A'])):
-            values[source['A'][i].value] = source['B'][i].value
         
-        print(values)
         page = wb_load.active
+        current_values = []
+        for i in range(1, len(page['A'])):
+            current_values.append(page['A'][i].value)
+
+        if(args.name not in current_values):
+            page.append([args.name, start_time])
+        else:
+            pass
+        wb_load.save(workbook_name)
+        
+        # print(current_values)
         exit()
-        for d in new_data:
-            page.append(d)
+        for i in range(1, len(page['A'])):
+            if args.name == page['A'][i].value:
+                page['B'][i].value = "new start time"
+            else:
+                page.append([args.name, start_time])
         wb_load.save(workbook_name)
     
     except FileNotFoundError:
